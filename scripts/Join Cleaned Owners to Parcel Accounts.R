@@ -83,6 +83,6 @@ plot(publicDallas["OWNERSHIP_GROUP"])
 maskDallas <- st_read(paste0(libDB, "Data Library/Data.gdb"), layer = "Dallas_MaskLayer_WaterParks") %>%
   st_transform(crs = 2276)
 
-test <- st_difference(publicDallas, maskDallas)
+invtParcels <- st_difference(publicDallas, maskDallas)
 
-plot(test["OWNERSHIP_GROUP"])
+plot(test["invtParcels"])
