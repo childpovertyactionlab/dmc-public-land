@@ -1,0 +1,21 @@
+name: "violence-interrupters"
+title: "DallasCRED Violence Interrupters"
+theme: theme.css
+description: |
+  Focus Areas
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Focus Areas"
+      menu:
+        - text: "Camp Wisdom and Gannon"
+          href: FA_campwisdomjimmiller.html
+        - text: "Loop 12 and Jim Miller"
+          href: FA_loop12jimmiller.html
+        - text: "Overton and Illinois"
+          href: FA_overtonillinois.html
+        - text: "Webb Chapel and Lombardy"
+          href: FA_webbchapellombardy.html
+output: distill::distill_article
