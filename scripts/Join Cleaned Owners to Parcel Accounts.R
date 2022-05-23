@@ -3,11 +3,11 @@ library(sf)
 library(CPALtools)
 library(googlesheets4)
 
-libDB <- "C:/Users/micha/CPAL Dropbox/" #dropbox directory
-libGH <- "C:/Users/micha/Documents/GitHub/" #github directory
+#libDB <- "C:/Users/micha/CPAL Dropbox/" #dropbox directory
+#libGH <- "C:/Users/micha/Documents/GitHub/" #github directory
 
-#libDB <- "E:/CPAL Dropbox/" #dropbox directory
-#libGH <- "C:/Users/Michael Lopez/Documents/GitHub/" #github directory
+libDB <- "E:/CPAL Dropbox/" #dropbox directory
+libGH <- "C:/Users/Michael Lopez/Documents/GitHub/" #github directory
 
 cleanOwners <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1_mMM9Smz4LndqW-fFx0O5VuIAyvIG3oLxvUdtMbv9Ys/", sheet = "pubDallas")
 
@@ -67,7 +67,7 @@ publicParcel <- parcels %>%
   left_join(., publicClean) %>%
   distinct(geometry, .keep_all = TRUE)
 
-plot(publicParcel["geometry"])
+#plot(publicParcel["geometry"])
 
 ownergrp <- publicParcel %>%
   st_drop_geometry(.) %>%
@@ -81,8 +81,13 @@ plot(publicDallas["OWNERSHIP_GROUP"])
 
 # import mask layer and cut against that
 maskDallas <- st_read(paste0(libDB, "Data Library/Data.gdb"), layer = "Dallas_MaskLayer_WaterParks") %>%
-  st_transform(crs = 2276)
+  st_transform(crs = 2276) %>%
+  st_union()
+
+plot(maskDallas)
 
 invtParcels <- st_difference(publicDallas, maskDallas)
 
-plot(test["invtParcels"])
+plot(invtParcels["OWNERSHIP_GROUP"])
+
+st_write(invtParcels, "data/Public Land in the City of Dallas.geojson")
